@@ -1,17 +1,17 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-FILENAME = 'test.edgelist'
+FILEPATH = 'test.edgelist'
 
 
 def main():
 
     #G = generate_test_graph1()
-    G = read_graph(FILENAME)
+    G = read_graph(FILEPATH)
 
     draw_graph(G)
 
-    write_graph(G, FILENAME)
+    write_graph(G, FILEPATH)
 
 
 def generate_test_graph1():
