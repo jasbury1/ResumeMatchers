@@ -15,7 +15,7 @@ In case you get errors about config files, make sure that you have the proper ve
 * pip install pyresparser
 * pip install django==3.1.6
 
-You can also run the following terminal command to install all depdencies at the same time.
+You can also run the following terminal command to install all depdencies at the same time
 ```
 pip install -r requirements.txt
 ```
