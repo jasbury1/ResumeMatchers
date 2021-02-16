@@ -30,8 +30,20 @@ def create_graph(e_dict):
     return nx.from_dict_of_lists(e_dict, create_using=nx.DiGraph())
 
 
+# Append new nodes and edges to a Knowledge Graph
+#   - G: a networkx DiGraph
+#   - e_dict: a dictionary of skill-job (key-value) pairs to be added
+def append_graph(G, e_dict):
+    G.add_nodes_from(e_dict)
+    node_edge_pairs = []
+    for skill, jobs in e_dict.items():
+        for job in jobs:
+            node_edge_pairs.append((skill, job))
+    G.add_edges_from(node_edge_pairs)
+
+
 # Visualize a Knowledge Graph
-#   - G: a networkx MultiDiGraph
+#   - G: a networkx DiGraph
 def draw_graph(G):
     sources = []
     for e in G.edges():
