@@ -5,7 +5,7 @@ def main():
     print(skills)
 
 def get_skills_from_resume(resume_path):
-    data = ResumeParser('../resources/resume-sample1.pdf').get_extracted_data()
+    data = ResumeParser(resume_path).get_extracted_data()
     skills = data['skills']
     return [s.lower() for s in skills]
 
