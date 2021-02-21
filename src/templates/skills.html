@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<main>
+  <h1>Skills</h1>
+  <p>We parsed the following skills from your resume.</p>
+  <ul>
+    {% for skill in skills %}
+      <li>{{skill}}</li>
+    {% endfor %}
+  </ul>
+</main>
+
+<form>
+  <input type=submit formmethod="GET" name="submit_button" value="Return">
+  <input type=submit formmethod="POST" name="submit_button" value="Find Job Postings">
+</form>
+
+{% endblock %}

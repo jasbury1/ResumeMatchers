@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <title>
+    {% block title %}ResumeMatchers{% endblock %}
+  </title>
+</head>
 <body>
+  {% block content %}
+  
+    <main>
+      <h1>ResumeMatchers</h1>
+      <p>Let's get started. Upload your resume(s).</p>
+      <form method="POST" enctype="multipart/form-data">
+        <input type=file name=file>
+        <input type=submit name="submit_button" value="Upload">
+      </form>
+    </main>
 
-<h1>ResumeMatchers</h1>
-<p>Let's get started. Upload your resume.</p>
-<form method="POST" enctype="multipart/form-data">
-    <input type=file name=file>
-    <input type=submit value=Upload>
-  </form>
+    <hr>
+    <p>Choose the file you want to parse.</p>
+    {% if not files %}
+    <p>No files uploaded yet.</p>
+    {% endif %}
+    {% for file in files %}
+    <form method="POST">
+      <input type=submit name="submit_button" value="{{file}}">
+    </form>
+    {% endfor %}
 
+  {% endblock %}
 </body>
 </html>
