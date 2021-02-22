@@ -41,13 +41,13 @@ def getSkills(filename):
     skills = get_skills_from_resume(UPLOAD_PATH + filename)
     return render_template("skills.html", skills=skills)
 
-@app.route('/parse/<filename>', methods=["POST", "GET"])
-def findJobs():
+@app.route('/parse/<filename>', methods=["POST"])
+def findJobs(filename):
     if request.form["submit_button"] == "Return":
         print("return")
         return redirect(url_for('index'))
     else:
-        return redirect(request.url(filename=filename))
+        return redirect(request.url)
 
 if __name__ == "__main__":
     app.run(debug=True)
