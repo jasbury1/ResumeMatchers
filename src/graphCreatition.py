@@ -1,6 +1,8 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
+from jobPredictor import rank_jobs
+
 FILEPATH = 'test.edgelist'
 
 
@@ -8,6 +10,8 @@ def main():
 
     #G = generate_test_graph1()
     G = read_graph(FILEPATH)
+
+    # print(rank_jobs(G, ["Python", "JavaScript"]))
 
     draw_graph(G)
 
