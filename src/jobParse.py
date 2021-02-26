@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 skills_file_path = "../resources/skills_list.txt"
 out_json_name = "../resources/scraped_jobs.json"
 
-URLS = ['https://www.indeed.com/jobs?q=software+engineer&l=California']
+URLS = ['https://www.indeed.com/q-software-engineer-l-California-jobs.html'] #'https://www.indeed.com/jobs?q=&l=California&radius=100&limit=50&sort=date']
+
 skills_list = set(line.strip().lower() for line in open(skills_file_path))
 
 
@@ -21,6 +22,9 @@ class Job:
 
 def main():
     jobs_list = []
+    
+    #for i in range(50, 10001, 50):
+    #    URLS.append("https://www.indeed.com/jobs?q=&l=California&radius=100&sort=date&limit=50&start={0}".format(i))
 
     for URL in URLS:
         create_jobs(process_url(URL), jobs_list)
@@ -36,8 +40,10 @@ def process_url(URL):
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
     results = soup.find(id='resultsCol')
-    job_data = results.find_all(class_='jobsearch-SerpJobCard')
-    return job_data
+    if results is not None:
+        job_data = results.find_all(class_='jobsearch-SerpJobCard')
+        return job_data
+    return []
 
 '''
 Create Jobs:
@@ -73,10 +79,12 @@ def create_jobs(job_data, jobs_list):
                     job_description_parsed)
 
         # Extract skills from the job listing and add to the job's skill list
-        words = [''.join(filter(str.isalnum, w)).lower() for w in new_job.long_description.split(' ')]
-        for word in words:
-            if word in skills_list:
-                new_job.skills.append(word)
+
+        if new_job.long_description is not None:
+            words = [''.join(filter(str.isalnum, w)).lower() for w in new_job.long_description.split(' ')]
+            for word in words:
+                if word in skills_list:
+                    new_job.skills.append(word)
 
         jobs_list.append(new_job)
 
