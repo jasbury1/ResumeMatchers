@@ -8,7 +8,7 @@ out_json_name = "../resources/scraped_jobs.json"
 
 URLS = ['https://www.indeed.com/jobs?q=&l=California&radius=100&limit=50&sort=date']
 
-skills_list = set(line.strip().lower() for line in open(skills_file_path))
+skills_list = set(line.strip().lower() for line in open(skills_file_path, "r", encoding='utf-8'))
 
 
 class Job:
@@ -37,7 +37,10 @@ Process URL:
     Returns the data found for the jobs located at the url as a list
 '''
 def process_url(URL):
-    page = requests.get(URL)
+    try:
+        page = requests.get(URL)
+    except requests.exceptions.ConnectionError:
+        print("site cannot be reached")
     soup = BeautifulSoup(page.content, 'html.parser')
     results = soup.find(id='resultsCol')
     if results is not None:
@@ -63,7 +66,10 @@ def create_jobs(job_data, jobs_list):
 
         # Get job description information
         if job_url is not None:
-            job_page = requests.get(job_url)
+            try:
+                job_page = requests.get(job_url)
+            except requests.exceptions.ConnectionError:
+                print("site cannot be reached")
             job_soup = BeautifulSoup(job_page.content, 'html.parser')
             job_description = job_soup.find(id='jobDescriptionText')
 
