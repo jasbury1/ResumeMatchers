@@ -8,15 +8,14 @@ https://pypi.org/project/pyresparser/
 Using the following library for job feature extraction:
 https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
-In case you get errors about config files, make sure that you have the proper versions of the following dependences:
-* pip install nltk
-* pip install spacy==2.3.5
-* pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1/en_core_web_sm-2.3.1.tar.gz
-* pip install pyresparser
-* pip install flask==1.1.2
+## How to work the program:
 
-You can also run the following terminal command to install all depdencies at the same time
-```
-pip install -r requirements.txt
-```
+Start by installing any dependencies with the following command:
+   pip install -r requirements.txt
+
+All graph data files come pre-created. The run script run.sh will create a
+fresh copy of the graph by running any setup steps over again. This may be
+desireable to fetch new skills from recent job postings. This step is not
+necessary for the application to function
+
 **NOTE: if you are contrinbuting to this project, make sure to add all dependencies to *requirements.txt*.**

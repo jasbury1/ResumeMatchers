@@ -8,7 +8,9 @@ class Job:
         self.location = location
         self.short_description = short_description
         self.long_description = long_description
+        self.skills = []
 
+skills_file_path = "../resources/skills_list.txt"
 URL = 'https://www.indeed.com/jobs?q=software+engineer&l=California'
 page = requests.get(URL)
 
@@ -18,6 +20,9 @@ results = soup.find(id='resultsCol')
 jobs = results.find_all(class_='jobsearch-SerpJobCard')
 
 jobs_list = []
+skills_list = set(line.strip() for line in open(skills_file_path)
+
+
 
 for job in jobs:
     # Get generic job information

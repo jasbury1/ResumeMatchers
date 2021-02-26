@@ -8,3 +8,4 @@ pyresparser
 flask==1.1.2
 networkx
 matplotlib
+bs4
