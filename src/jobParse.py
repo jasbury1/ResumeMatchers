@@ -20,8 +20,7 @@ results = soup.find(id='resultsCol')
 jobs = results.find_all(class_='jobsearch-SerpJobCard')
 
 jobs_list = []
-skills_list = set(line.strip() for line in open(skills_file_path)
-
+skills_list = set(line.strip().lower() for line in open(skills_file_path))
 
 
 for job in jobs:
@@ -51,12 +50,24 @@ for job in jobs:
                   description_info.text.strip(),
                   job_description_parsed)
 
+    # Extract skills from the job listing and add to the job's skill list
+    words = [''.join(filter(str.isalnum, w)).lower() for w in new_job.long_description.split(' ')]
+    for word in words:
+        if word in skills_list:
+            new_job.skills.append(word)
+
     jobs_list.append(new_job)
 
 # Test that jobs_list is filled
+
 for job in jobs_list:
     print(job.title)
     print(job.company)
     print(job.location)
+    print(job.skills)
+'''
     print(job.short_description)
     print(job.long_description)
+
+'''
+print(len(jobs))
