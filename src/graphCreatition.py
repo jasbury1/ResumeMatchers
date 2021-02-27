@@ -1,18 +1,24 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import json
 
 from jobPredictor import rank_jobs
 
-FILEPATH = 'test.edgelist'
+# The file we are reading and writing the complete knowledge graph to
+FILEPATH = 'knowledgegraph.edgelist'
+# The file of scraped job data we use to create our knowledge graph
+JSONPATH = 'resources/scraped_jobs.json'
 
 
 def main():
-    G = generate_test_graph1()
-    #G = read_graph(FILEPATH)
 
-    # print(rank_jobs(G, ["Python", "JavaScript"]))
+    #G = generate_graph_from_json(JSONPATH)
+    #G = generate_test_graph1()
+    G = read_graph(FILEPATH)
 
-    draw_graph(G)
+    print(rank_jobs(G, ["Python", "JavaScript"]))
+
+    #draw_graph(G)
 
     write_graph(G, FILEPATH)
 
@@ -31,6 +37,16 @@ def generate_test_graph1():
     edge_dict['Job5'] = ['JavaScript', 'CSS']
 
     return create_graph(edge_dict)
+
+
+# Read a JSON file of jobs and skills to create a python dictionary
+#   - path: path of JSON file
+def generate_graph_from_json(path):
+    with open(path) as json_file:
+        data = json.load(json_file)
+        # replacing spaces with underscores in keys
+        data = {x.replace(' ', '_'): v for x, v in data.items()}
+        return create_graph(data)
 
 
 # Create a Knowledge Graph, provided a dictionary of nodes and edges
