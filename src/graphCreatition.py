@@ -1,13 +1,16 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
+from jobPredictor import rank_jobs
+
 FILEPATH = 'test.edgelist'
 
 
 def main():
-
     G = generate_test_graph1()
     #G = read_graph(FILEPATH)
+
+    # print(rank_jobs(G, ["Python", "JavaScript"]))
 
     draw_graph(G)
 
@@ -39,6 +42,18 @@ def create_graph(e_dict):
 # Append new nodes and edges to a Knowledge Graph
 #   - G: a networkx DiGraph
 #   - e_dict: a dictionary of job-skills (key-value) pairs to be added
+def append_graph(G, e_dict):
+    G.add_nodes_from(e_dict)
+    node_edge_pairs = []
+    for skill, jobs in e_dict.items():
+        for job in jobs:
+            node_edge_pairs.append((skill, job))
+    G.add_edges_from(node_edge_pairs)
+
+
+# Append new nodes and edges to a Knowledge Graph
+#   - G: a networkx DiGraph
+#   - e_dict: a dictionary of skill-job (key-value) pairs to be added
 def append_graph(G, e_dict):
     G.add_nodes_from(e_dict)
     node_edge_pairs = []
