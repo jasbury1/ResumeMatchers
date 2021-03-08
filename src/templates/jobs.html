@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<main>
+  <h1>Job Recommendations</h1>
+  <p>Based on the skills we found in your resume, we think these jobs might be a good fit for you!</p>
+  <p>You can find these listings on indeed.com:</p>
+  &emsp;
+
+  <ul>
+    {% for job in jobs %}
+    <li><b>{{job[0]}}</b></li>
+    <blockquote> at {{job[1]}}, in {{job[2]}}</blockquote>
+    {% endfor %}
+  </ul>
+</main>
+
+<form method="POST">
+  <input type=submit name="submit_button" value="Return">
+</form>
+
+{% endblock %}
