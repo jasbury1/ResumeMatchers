@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup
 skills_file_path = "../resources/skills_list.txt"
 out_json_name = "../resources/scraped_jobs.json"
 
-URLS = ['https://www.indeed.com/jobs?q=&l=California&radius=100&limit=50&sort=date']
+URLS = ['https://www.indeed.com/jobs?q=Softwaer+Engineer&l=California&radius=100&limit=50&sort=date']
 
-skills_list = set(line.strip().lower() for line in open(skills_file_path))
+skills_list = set(line.strip().lower() for line in open(skills_file_path, "r", encoding='utf-8'))
 
 
 class Job:
@@ -24,7 +24,7 @@ def main():
     jobs_list = []
     
     for i in range(50, 10001, 50):
-        URLS.append("https://www.indeed.com/jobs?q=&l=California&radius=100&sort=date&limit=50&start={0}".format(i))
+        URLS.append("https://www.indeed.com/jobs?q=Software+Engineer&l=California&radius=100&sort=date&limit=50&start={0}".format(i))
 
     for URL in URLS:
         create_jobs(process_url(URL), jobs_list)
@@ -63,9 +63,13 @@ def create_jobs(job_data, jobs_list):
 
         # Get job description information
         if job_url is not None:
-            job_page = requests.get(job_url)
-            job_soup = BeautifulSoup(job_page.content, 'html.parser')
-            job_description = job_soup.find(id='jobDescriptionText')
+            try:
+                job_page = requests.get(job_url)
+                job_soup = BeautifulSoup(job_page.content, 'html.parser')
+                job_description = job_soup.find(id='jobDescriptionText')
+            except:
+                print("Site cannot be reached")
+                break   
 
         job_description_parsed = None
         if job_description is not None:
