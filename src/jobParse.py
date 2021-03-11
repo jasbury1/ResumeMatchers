@@ -6,9 +6,12 @@ from bs4 import BeautifulSoup
 skills_file_path = "../resources/skills_list.txt"
 out_json_name = "../resources/scraped_jobs.json"
 
-URLS = ['https://www.indeed.com/jobs?q=Softwaer+Engineer&l=California&radius=100&limit=50&sort=date']
+URLS = [
+    'https://www.indeed.com/jobs?q=Softwaer+Engineer&l=California&radius=100&limit=50&sort=date'
+]
 
-skills_list = set(line.strip().lower() for line in open(skills_file_path, "r", encoding='utf-8'))
+skills_list = set(line.strip().lower()
+                  for line in open(skills_file_path, "r", encoding='utf-8'))
 
 
 class Job:
@@ -26,7 +29,9 @@ def main():
     jobs_list = []
 
     for i in range(50, 10001, 50):
-        URLS.append("https://www.indeed.com/jobs?q=Software+Engineer&l=California&radius=100&sort=date&limit=50&start={0}".format(i))
+        URLS.append(
+            "https://www.indeed.com/jobs?q=Software+Engineer&l=California&radius=100&sort=date&limit=50&start={0}"
+            .format(i))
 
     for URL in URLS:
         create_jobs(process_url(URL), jobs_list)
@@ -134,10 +139,19 @@ def format_job_strings(jobs):
         job = job.replace("_", " ")
         split = job.split('; ')
         if len(split) >= 3:
+            title_with_addition = split[0].replace(" ", "+")
+            company_with_addition = split[1].replace(" ", "+")
+            location_with_addition = split[2].replace(" ", "+")
+            location_with_addition = location_with_addition.replace(",", "%2C")
+            split.append("https://www.indeed.com/jobs?q=" +
+                         title_with_addition + "&l=" + location_with_addition +
+                         "&rbc=" + company_with_addition)
             formatted_jobs.append(split)
 
     return formatted_jobs
 
+
+#https://www.indeed.com/jobs?q=UI+AngularJS+Bootstrap+Developer&l=Austin%2C+TX
 
 if __name__ == '__main__':
     main()

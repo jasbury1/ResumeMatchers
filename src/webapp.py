@@ -65,15 +65,26 @@ def findJobs(filename):
         return redirect(request.url)
 
 
-@app.route('/parse/<filename>/jobs', methods=["GET", "POST"])
+@app.route('/parse/<filename>/jobs')
 def getJobs(filename):
+
     skills = session.get('skills', None)
 
     kg = read_graph(KG_FILEPATH)
     jobs = rank_jobs(kg, skills)
     jobs = format_job_strings(jobs)
 
-    return render_template("jobs.html", jobs=jobs[:10])
+    return render_template("jobs.html", jobs=jobs[:100])
+
+
+@app.route('/parse/<filename>/jobs', methods=["POST"])
+def navgiateJobs(filename):
+
+    if request.form["submit_button"] == "Return":
+        print("return")
+        return redirect(url_for('index'))
+    else:
+        return redirect(request.url)
 
 
 if __name__ == "__main__":

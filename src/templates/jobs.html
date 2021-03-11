@@ -8,12 +8,12 @@
   <p>You can find these listings on indeed.com:</p>
   &emsp;
 
-  <ul>
+  <ol type="1">
     {% for job in jobs %}
-    <li><b>{{job[0]}}</b></li>
+    <li><a href="{{job[3]}}"><b>{{job[0]}}</b></a></li>
     <blockquote> at {{job[1]}}, in {{job[2]}}</blockquote>
     {% endfor %}
-  </ul>
+  </ol>
 </main>
 
 <form method="POST">
